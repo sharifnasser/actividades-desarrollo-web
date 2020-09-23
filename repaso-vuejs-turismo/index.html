@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <title>Turismo MX</title>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    </head>
+
+    <body>
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">Turismo MX</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home
+                            <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Servicios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contacto</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div class="container">
+
+            <!-- Jumbotron Header -->
+            <header id="header" class="jumbotron my-3">
+            <h1 class="display-4">{{title}}</h1>
+            <p class="lead">Vista alguno de estos lugares en México</p>
+            <a href="https://www.visitmexico.com/" class="btn btn-primary">¡Encuentra muchos más!</a>
+            </header>
+
+            <!-- Page Cards -->
+            <div id="cards" class="row text-center">
+
+                <div class="col-lg-6 col-md-6 mb-4">
+                    <div class="card h-100">
+                    <img class="card-img-top" height="300px" src="https://www.eleconomista.com.mx/__export/1583387033076/sites/eleconomista/img/2020/03/04/41226055.jpg_596760611.jpg">
+                    <div v-if="!showNL" class="card-body">
+                        <h4 class="card-title">Conoce Nuevo Leon</h4>
+                        <p class="card-text">Oficialmente llamado Estado Libre y Soberano de Nuevo León. Su capital y ciudad más poblada es Monterrey.</p>
+                    </div>
+                    <div v-else="showNL" class="card-body">
+                        <h4 class="card-title">Monterrey</h4>
+                        <p class="card-text">Monterrey, la capital del estado de Nuevo León en el noreste de México, es un extenso centro industrial y de negocios rodeado de montañas.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-primary" @click="showNL = !showNL">Conoce aqui!</a>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 mb-4">
+                    <div class="card h-100">
+                    <img class="card-img-top" height="300px" src="https://www.dondeir.com/wp-content/uploads/2019/06/portada-etn.jpg">
+                    <div v-show="!showQRO" class="card-body">
+                        <h4 class="card-title">Conoce Querétaro</h4>
+                        <p class="card-text">Oficialmente llamado Estado Libre y Soberano de Querétaro. Su capital y ciudad más poblada es Santiago de Querétaro.</p>
+                    </div>
+                    <div v-show="showQRO" class="card-body">
+                        <h4 class="card-title">Querétaro</h4>
+                        <p class="card-text">Santiago de Querétaro es una ciudad del centro de México. Es conocida por su arquitectura colonial española bien conservada, con un sorprendente acueducto de piedra rosa.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-primary" @click="showQRO = !showQRO">Conoce aqui!</a>
+                    </div>
+                    </div>
+                </div>
+            
+            </div>
+            <!-- /.row -->
+            <div id="list" class="row text-center">
+                <div class="col-lg-6 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <h4 class="card-title">Llena la lista con los lugares que quieres visitar</h4>
+                        <div v-for="(place, index) in places">
+                            <input v-model="place.value" :key="index">
+                        </div>
+                        <div class="card-footer">
+                            <button @click="addPlace" class="btn btn-primary">Nuevo Lugar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 mb-4">
+                    <ul class="list-group">
+                        <li class="list-group-item active">Tomale foto a tu lista de lugares:</li>
+                        <li v-for="place in places" class="list-group-item">
+                            {{ place.value }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+
+        <!-- Footer -->
+        <footer class="py-3 bg-dark">
+            <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Sharif Nasser 2020</p>
+            </div>
+            <!-- /.container -->
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script>
+            new Vue({
+                el: '#header',
+                data: {
+                    title: "¡Conoce Mexico!",
+                }
+            })
+            new Vue({
+                el: '#cards',
+                data: {
+                    showNL: false,
+                    showQRO: false
+                }
+            })
+            new Vue({
+                el: '#list',
+                data: {
+                    places: []
+                },
+                methods: {
+                    addPlace: function () {
+                    this.places.push({ value: '' });
+                    }
+                }
+            })
+        </script>
+
+    </body>
+
+</html>
